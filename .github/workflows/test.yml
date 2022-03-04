@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       APPROVED_USERS: '["Long-Wan", "long-wan-test"]'
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && ! contains(fromJson(env.APPROVED_USERS), github.events.pull_request.sender)
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && ! contains(fromJson(github.env.APPROVED_USERS), github.events.pull_request.sender)
     environment:
       name: Pull Requests
     steps:
