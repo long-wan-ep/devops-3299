@@ -11,7 +11,7 @@ jobs:
   approve:
     needs: []
     runs-on: ubuntu-20.04
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && ! contains(fromJson($APPROVED_USERS), github.events.pull_request.sender)
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && ! contains(fromJson(env.APPROVED_USERS), github.events.pull_request.sender)
     environment:
       name: Pull Requests
     steps:
