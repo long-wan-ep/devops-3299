@@ -9,7 +9,7 @@ jobs:
     needs: []
     runs-on: ubuntu-20.04
     env:
-      SENDER: ${{ github.event.pull_request.sender.login }}
+      SENDER: ${{ toJson(github) }}
     steps:
       - id: check_user
         run: |
