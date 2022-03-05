@@ -5,13 +5,22 @@ on:
     branches:
       - 'main'
 jobs:
-  # This job forces the PR to be approved by an authorized reviewer before the rest of the workflow can run.
-  approve:
+  check-approved-users:
     needs: []
     runs-on: ubuntu-20.04
-    env:
-      APPROVED_USERS: '["Long-Wan", "long-wan-test"]'
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && ! contains(fromJson(github.env.APPROVED_USERS), github.events.pull_request.sender)
+    steps:
+      - id: check_user
+        run: |
+          approved_users=("Long-Wan" "long-wan-test")
+          if [[ " ${approved_users[*]} " =~ " ${{ github.event.pull_request.sender }} " ]]; then echo ::set-output name=user_approved::true ; fi
+    outputs:
+      user_approved: ${{ steps.check_user.outputs. }}
+
+  # This job forces the PR to be approved by an authorized reviewer before the rest of the workflow can run.
+  approve:
+    needs: [check-approved-users]
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && needs.check-approved-users.outputs.user_approved != 'true'
     environment:
       name: Pull Requests
     steps:
