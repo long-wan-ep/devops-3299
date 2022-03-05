@@ -14,7 +14,7 @@ jobs:
       - id: check_user
         run: |
           approved_users=("Long-Wan" "long-wan-test")
-          echo "${{ env.SENDER }}"
+          echo "$SENDER"
           if [[ " ${approved_users[*]} " =~ " ${{ env.SENDER }} " ]]; then echo ::set-output name=user_approved::true ; fi
     outputs:
       user_approved: ${{ steps.check_user.outputs.user_approved }}
