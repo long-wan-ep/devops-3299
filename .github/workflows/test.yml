@@ -8,13 +8,14 @@ jobs:
   check-approved-users:
     needs: []
     runs-on: ubuntu-20.04
+    env:
+      SENDER: ${{ github.event.pull_request.sender.login }}
     steps:
       - id: check_user
         run: |
           approved_users=("Long-Wan" "long-wan-test")
-          echo "$GITHUB_CONTEXT"
-          echo "${{ github.event }}"
-          if [[ " ${approved_users[*]} " =~ " ${{ github.event.pull_request.sender.login }} " ]]; then echo ::set-output name=user_approved::true ; fi
+          echo "${{ env.SENDER }}"
+          if [[ " ${approved_users[*]} " =~ " ${{ env.SENDER }} " ]]; then echo ::set-output name=user_approved::true ; fi
     outputs:
       user_approved: ${{ steps.check_user.outputs.user_approved }}
 
