@@ -9,9 +9,11 @@ jobs:
   approve:
     needs: []
     runs-on: ubuntu-20.04
+    env:
+      APPROVE_USERS: '["long-wan-test"]'
     if: github.event_name == 'pull_request_target' &&
       github.event.pull_request.head.repo.full_name != github.repository &&
-      ! contains(fromJson('["long-wan-test"]'), github.event.pull_request.head.user.login)
+      ! contains(fromJson(env.APPROVE_USERS), github.event.pull_request.head.user.login)
     environment:
       name: Pull Requests
     steps:
