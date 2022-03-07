@@ -8,6 +8,7 @@ jobs:
   check-approved-users:
     needs: []
     runs-on: ubuntu-20.04
+    if: github.event_name == 'pull_request_target'
     env:
       SENDER: ${{ github.event.pull_request.head.user.login }}
     steps:
