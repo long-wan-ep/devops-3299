@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event_name == 'pull_request_target' &&
       github.event.pull_request.head.repo.full_name != github.repository &&
-      ! contains(fromJson('["Long-Wan", "long-wan-test"]'), github.event.pull_request.head.user.login)
+      ! contains(fromJson('["long-wan-test"]'), github.event.pull_request.head.user.login)
     environment:
       name: Pull Requests
     steps:
