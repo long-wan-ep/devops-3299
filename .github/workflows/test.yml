@@ -4,6 +4,7 @@ on:
   pull_request_target:
     branches:
       - 'main'
+      - 'main2'
 jobs:
   # This job forces the PR to be approved by an authorized reviewer before the rest of the workflow can run.
   approve:
