@@ -12,6 +12,8 @@ jobs:
     env:
       SENDER: ${{ github.event.pull_request.head.user.login }}
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - id: check_user
         run: |
           readarray -t approved_users < ./approved_users
